@@ -3,6 +3,6 @@ PxeServer ansible_host=10.51.20.120 dhcp_nic=enp0s8 dhcp_ip=192.168.82.250 dhcp_
 PxeServer
 [all:vars]
 ansible_connection=ssh
-ansible_ssh_pass='Huayun@123'
-iso_url=http://172.16.81.139/soft/CentOS-7-x86_64-Minimal-1511.iso
+ansible_ssh_pass='CHANGEME'
+iso_url=http://CHANGEME/soft/CentOS-7-x86_64-Minimal-1511.iso
 iso_dir=/root/
