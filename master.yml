@@ -19,40 +19,8 @@
     - name: install libselinux
       shell: if [ `rpm -qa | grep libselinux-python |wc -l` -eq 0 ];then rpm -ivh /root/libselinux-python-2.2.2-6.el7.x86_64.rpm;fi
       ignore_errors: yes
-#    - name: set dhcp nic
-#      blockinfile:
-#       dest: /etc/sysconfig/network-scripts/ifcfg-{{ dhcp_nic }} 
-#       block: |
-#        TYPE=Ethernet
-#        BOOTPROTO=static
-#        DEFROUTE=yes
-#        PEERDNS=yes
-#        PEERROUTES=yes
-#        IPV4_FAILURE_FATAL=no
-#        IPV6INIT=yes
-#        IPV6_AUTOCONF=yes
-#        IPV6_DEFROUTE=yes
-#        IPV6_PEERDNS=yes
-#        IPV6_PEERROUTES=yes
-#        IPV6_FAILURE_FATAL=no
-#        NAME=enp0s8
-#        DEVICE=enp0s8
-#        ONBOOT=yes
-#        IPADDR=192.168.82.250
-#        NETMASK=255.255.255.0
-#
-#    - name: set dhcp_nic
-#      lineinfile: dest=/etc/sysconfig/network-scripts/ifcfg-{{ dhcp_nic }} regexp={{ item.regexp }} line={{ item.line }}
-#      with_items:
-#        - { regexp: '^NAME=', line: 'NAME={{ dhcp_nic }}' }
-#        - { regexp: '^DEVICE=:', line: 'DEVICE={{ dhcp_nic }}' }
-#        - { regexp: '^IPADDR=:', line: 'DEVICE={{ dhcp_ip }}' }
-#        - { regexp: '^NETMASK=:', line: 'DEVICE={{ dhcp_netmask }}' }
-#    - name: up dhcp nic
-#      shell: ifdown {{ dhcp_nic }};ifup {{ dhcp_nic }}
 
 - hosts: cobbler_server
   roles:
     - common
     - cobblerdeploy
-
