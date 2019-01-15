@@ -9,6 +9,11 @@
 - name: restart sshd server
   service: name=sshd state=restarted
 
+- name: set dhcp nic 
+  template: src=templates/ifcfg.j2 dest=/etc/sysconfig/network-scripts/ifcfg-{{ dhcp_nic }}
+
+- name: restart dhcp nic
+  shell: ifdown {{dhcp_nic}};ifup {{dhcp_nic}}
 - name: check sestatus status
   shell: sestatus | grep "SELinux status" | awk '{print $3}'
   register: sestatus

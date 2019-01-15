@@ -21,8 +21,8 @@
 - name: config /etc/cobbler/settings 
   lineinfile: dest=/etc/cobbler/settings regexp={{ item.regexp }} line={{ item.line }}
   with_items:
-    - { regexp: '^server:', line: 'server: "{{ ansible_host }}"' }
-    - { regexp: '^next_server:', line: 'next_server: "{{ ansible_host }}"' }
+    - { regexp: '^server:', line: 'server: "{{ dhcp_ip }}"' }
+    - { regexp: '^next_server:', line: 'next_server: "{{ dhcp_ip }}"' }
     - { regexp: '^default_password_crypted:', line: 'default_password_crypted: $1$crfW.rth$9rZrTThMOT9Dgt13cJIIe0' }
     - { regexp: '^manage_dhcp:', line: 'manage_dhcp: 1' }
 
@@ -30,7 +30,7 @@
   template: src=dhcp.template.j2 dest=/etc/cobbler/dhcp.template
 
 - name: start  cobbler server and it's deps server
-  service: name={{ item }}  state=started enabled=yes
+  service: name={{ item }}  state=restarted enabled=yes
   with_items:
     - xinetd
     - rsyncd
@@ -89,5 +89,11 @@
        hardware ethernet 00:50:56:a3:f5:7d;
        fixed-address 172.16.81.136;
      }
+
+- name: start  cobbler server and it's deps server
+  service: name={{ item }}  state=restarted enabled=yes
+  with_items:
+    - xinetd
+
 - name: sync cobbler
   shell: cobbler sync  
